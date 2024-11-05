@@ -13,9 +13,6 @@ public class Program {
 
     public static void main(String[] args) {
 
-
-
-
         int nav = 0;
 
         while(nav !=9){

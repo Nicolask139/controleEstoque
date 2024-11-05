@@ -9,45 +9,6 @@
 <VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.controleEstoque.controller.ControleController">
 
   <children>
-    <MenuBar VBox.vgrow="NEVER">
-      <menus>
-        <Menu mnemonicParsing="false" text="File">
-          <items>
-            <MenuItem mnemonicParsing="false" text="New" />
-            <MenuItem mnemonicParsing="false" text="Open…" />
-            <Menu mnemonicParsing="false" text="Open Recent" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Close" />
-            <MenuItem mnemonicParsing="false" text="Save" />
-            <MenuItem mnemonicParsing="false" text="Save As…" />
-            <MenuItem mnemonicParsing="false" text="Revert" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Preferences…" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Quit" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Edit">
-          <items>
-            <MenuItem mnemonicParsing="false" text="Undo" />
-            <MenuItem mnemonicParsing="false" text="Redo" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Cut" />
-            <MenuItem mnemonicParsing="false" text="Copy" />
-            <MenuItem mnemonicParsing="false" text="Paste" />
-            <MenuItem mnemonicParsing="false" text="Delete" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Select All" />
-            <MenuItem mnemonicParsing="false" text="Unselect All" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Help">
-          <items>
-            <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
-          </items>
-        </Menu>
-      </menus>
-    </MenuBar>
     <SplitPane dividerPositions="0.2505567928730512" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <items>
         <AnchorPane>
@@ -60,11 +21,12 @@
                 <Color red="0.624" green="0.624" blue="0.624" fx:id="x2" />
               </textFill>
             </Label>
-                  <Button layoutX="40.0" layoutY="103.0" mnemonicParsing="false" text="Controle de estoque" />
-                  <Button layoutX="40.0" layoutY="181.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="143.0" text="Atualizar estoque" />
-                  <Button layoutX="40.0" layoutY="262.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="143.0" text="Fornecedores" />
-                  <Button layoutX="40.0" layoutY="345.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="143.0" text="Clientes" />
-                  <Button layoutX="40.0" layoutY="429.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="143.0" text="Histórico" />
+              <Button fx:id="controleEstoqueButton" layoutX="40.0" layoutY="103.0" mnemonicParsing="false" text="Controle de estoque" />
+              <Button fx:id="cadastrarProdutoButton" layoutX="40.0" layoutY="227.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="143.0" text="Cadastrar produto" />
+              <Button fx:id="fornecedoresButton" layoutX="40.0" layoutY="288.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="143.0" text="Fornecedores" />
+              <Button fx:id="clientesButton" layoutX="40.0" layoutY="344.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="143.0" text="Clientes" />
+              <Button fx:id="historicoButton" layoutX="40.0" layoutY="406.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="143.0" text="Histórico" />
+              <Button fx:id="atualizarEstoqueButton" layoutX="40.0" layoutY="168.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="143.0" text="Atualizar estoque" />
           </children>
         </AnchorPane>
         <ScrollPane prefHeight="-1.0" prefWidth="-1.0">

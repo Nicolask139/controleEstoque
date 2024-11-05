@@ -10,10 +10,10 @@ public class MainApp extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Create.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Login.fxml"));
 		Parent root = loader.load();
 
-		primaryStage.setTitle("Aplicação JavaFX Pura");
+		primaryStage.setTitle("ControleEstoque");
 		primaryStage.setScene(new Scene(root));
 		primaryStage.show();
 	}
