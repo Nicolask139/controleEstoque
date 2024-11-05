@@ -40,7 +40,7 @@ public class Program {
     }
 
         sc.close();
-        DB.closeConenction();
+        DB.closeConnection();
     }
 
     public static void readSpecificItem() {
@@ -105,17 +105,6 @@ public class Program {
                             + "VALUES"
                             + "(?,?,?)",
                     Statement.RETURN_GENERATED_KEYS);
-
-
-            //System.out.print("Insira o nome do produto: ");
-           // String nome_sc = sc.nextLine();
-
-
-            //System.out.print("Insira o valor do produto (sem 'R$'): ");
-            //double preco_sc = sc.nextDouble();
-
-            //System.out.print("Insira a quantidade inicial: ");
-           // int quantidade_sc = sc.nextInt();
 
 
             st.setString(1, nome);

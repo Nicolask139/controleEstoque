@@ -48,7 +48,7 @@
 
                                 <TextField fx:id="createNome" layoutX="117.0" layoutY="86.0" />
                                 <TextField fx:id="createPreco" layoutX="117.0" layoutY="118.0" />
-                                <TextField fx:id="creteQuantidade" layoutX="117.0" layoutY="149.0" />
+                                <TextField fx:id="createQuantidade" layoutX="117.0" layoutY="149.0" />
                                 <Label layoutX="19.0" layoutY="90.0" text="Nome:" />
                                 <Button fx:id="createCadastrar" layoutX="19.0" layoutY="219.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="222.0" text="Cadastrar produto" />
                         <Label layoutX="19.0" layoutY="122.0" text="Preco:" />

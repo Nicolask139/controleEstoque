@@ -1,14 +1,14 @@
 package com.controleEstoque.controller;
 
+import com.controleEstoque.db.DB;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
-import static com.controleEstoque.funcoes.Program.createItem;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class CadastrarController {
 
@@ -30,41 +30,79 @@ public class CadastrarController {
     @FXML
     private Button historicoButton;
     @FXML
-    private Button cadastrarProdutoButton;
-    @FXML
     private Button atualizarEstoqueButton;
 
     public void initialize() {
-        // Configurando eventos de ação para os botões
         controleEstoqueButton.setOnAction(event -> loadScreen("/view/Controle.fxml"));
         fornecedoresButton.setOnAction(event -> loadScreen("/view/Fornecedores.fxml"));
         clientesButton.setOnAction(event -> loadScreen("/view/Clientes.fxml"));
         historicoButton.setOnAction(event -> loadScreen("/view/Historico.fxml"));
         atualizarEstoqueButton.setOnAction(event -> loadScreen("/view/Atualizar.fxml"));
+        createCadastrar.setOnAction(event -> acaoCadastrar()); // Move o setOnAction para initialize
     }
 
     private void loadScreen(String fxmlFile) {
-        // Obtém o Stage atual no momento do evento
         Stage currentStage = (Stage) controleEstoqueButton.getScene().getWindow();
-        // Chama o método da superclasse RouteController
         new RouteController().loadScreen(currentStage, fxmlFile);
     }
 
     @FXML
     public void acaoCadastrar() {
-        createCadastrar.setOnAction(event -> {
-            String nome_create = createNome.getText();
-            double preco = Double.parseDouble(createPreco.getText());
-            int quantidade = Integer.parseInt(createQuantidade.getText());
+        String nome_create = createNome.getText();
+        double preco;
+        int quantidade;
 
-
+        try {
+            preco = Double.parseDouble(createPreco.getText());
+            quantidade = Integer.parseInt(createQuantidade.getText());
             cadastrar(nome_create, preco, quantidade);
-        });
-
+        } catch (NumberFormatException e) {
+            // Exibir um alerta em caso de entrada inválida
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Entrada inválida: verifique os campos de preço e quantidade.");
+            alert.showAndWait();
+        }
     }
-    public String cadastrar(String nome_create, double preco, int quantidade){
-        createItem(nome_create,preco,quantidade);
-        return null;
+
+    public void cadastrar(String nome_create, double preco, int quantidade) {
+        createItem(nome_create, preco, quantidade);
     }
 
+    public static void createItem(String nome, double preco, int quantidade) {
+        PreparedStatement st = null;
+        java.sql.Connection conn = null; // Declare a conexão aqui
+
+        try {
+            conn = DB.getConnection(); // Obtém a conexão
+            st = conn.prepareStatement(
+                    "INSERT INTO produto (Nome, Preco, Quantidade) VALUES (?, ?, ?)",
+                    Statement.RETURN_GENERATED_KEYS);
+
+            st.setString(1, nome);
+            st.setDouble(2, preco);
+            st.setInt(3, quantidade);
+
+            int rowsAffected = st.executeUpdate();
+            if (rowsAffected > 0) {
+                ResultSet rs = st.getGeneratedKeys();
+                if (rs.next()) {
+                    int id = rs.getInt(1);
+                    System.out.println("Produto cadastrado com sucesso! ID = " + id);
+                    // Usar Alert para notificar o usuário
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Produto cadastrado com sucesso! ID = " + id);
+                    alert.showAndWait();
+                }
+            } else {
+                System.out.println("Nenhuma linha afetada.");
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Nenhum produto cadastrado.");
+                alert.showAndWait();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Erro ao cadastrar o produto: " + e.getMessage());
+            alert.showAndWait();
+        } finally {
+            DB.closeStatement(st);
+            DB.closeConnection();
+        }
+    }
 }
