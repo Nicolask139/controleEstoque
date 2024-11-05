@@ -3,6 +3,8 @@ package com.controleEstoque.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class ControleController {
@@ -27,9 +29,14 @@ public class ControleController {
     private Button cadastrarProdutoButton;
     @FXML
     private Button atualizarEstoqueButton;
+    @FXML
+    private TextField nomeProdutoField;
+    @FXML
+    private ListView listaProdutos;
+    @FXML
+    private Button pesquisarButton;
 
     public void initialize() {
-        // Defina o evento de ação nos botões
         atualizarEstoqueButton.setOnAction(event -> loadScreen("/view/Atualizar.fxml"));
         fornecedoresButton.setOnAction(event -> loadScreen("/view/Fornecedores.fxml"));
         clientesButton.setOnAction(event -> loadScreen("/view/Clientes.fxml"));
@@ -38,9 +45,7 @@ public class ControleController {
     }
 
     private void loadScreen(String fxmlFile) {
-        // Obtém o Stage atual no momento do evento
         Stage currentStage = (Stage) controleEstoqueButton.getScene().getWindow();
-        // Chama o método da superclasse RouteController
         new RouteController().loadScreen(currentStage, fxmlFile);
     }
 }

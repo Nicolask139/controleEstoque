@@ -34,10 +34,10 @@
             <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="545.0" prefWidth="642.0">
               <children>
                 <Label alignment="CENTER" font="$x1" layoutX="62.0" layoutY="14.0" style="&#10;" text="Controle de estoque" textAlignment="CENTER" textFill="$x2" wrapText="false" />
-                        <Label layoutX="13.0" layoutY="102.0" prefHeight="18.0" prefWidth="166.0" text="Total em estoque:" />
-                        <Label layoutX="13.0" layoutY="137.0" prefHeight="18.0" prefWidth="158.0" text="Disponiveis para venda: " />
-                        <Label layoutX="184.0" layoutY="102.0" text="0" />
-                        <Label layoutX="184.0" layoutY="137.0" text="0" />
+                        <Label layoutX="61.0" layoutY="102.0" prefHeight="18.0" prefWidth="166.0" text="Total em estoque:" />
+                        <Label layoutX="63.0" layoutY="137.0" prefHeight="18.0" prefWidth="158.0" text="Disponiveis para venda: " />
+                        <Label layoutX="235.0" layoutY="102.0" text="0" />
+                        <Label layoutX="235.0" layoutY="137.0" text="0" />
                         <Label alignment="CENTER" layoutX="67.0" layoutY="183.0" style="&#10;" textAlignment="CENTER" wrapText="false">
                            <font>
                               <Font size="18.0" fx:id="x11" />
@@ -47,6 +47,17 @@
                            </textFill>
                         </Label>
                         <Separator layoutX="-1.0" layoutY="232.0" prefHeight="22.0" prefWidth="864.0" />
+                        <ListView fx:id="listaProdutos" layoutX="62.0" layoutY="317.0" prefHeight="200.0" prefWidth="541.0" />
+                        <Label alignment="CENTER" layoutX="62.0" layoutY="260.0" style="&#10;" text="Busca de produtos:" textAlignment="CENTER" wrapText="false">
+                           <font>
+                              <Font size="18.0" fx:id="x12" />
+                           </font>
+                           <textFill>
+                              <Color red="0.624" green="0.624" blue="0.624" fx:id="x22" />
+                           </textFill>
+                        </Label>
+                        <TextField fx:id="nomeProdutoField" layoutX="61.0" layoutY="285.0" />
+                        <Button fx:id="pesquisarButton" layoutX="235.0" layoutY="285.0" mnemonicParsing="false" text="Pesquisar" />
               </children>
             </AnchorPane>
           </content>

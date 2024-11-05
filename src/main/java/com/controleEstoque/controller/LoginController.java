@@ -1,9 +1,11 @@
 package com.controleEstoque.controller;
 
+import com.controleEstoque.db.DB;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Button;
@@ -58,29 +60,33 @@ public class LoginController {
         }
     }
 
-    private boolean autenticacao(String nome, String senha) {
-        String url = "jdbc:mysql://localhost:3306/controleEstoque_db";
-        String dbUsuario = "root";
-        String dbSenha = "imbriani10";
+    public static boolean autenticacao(String nome, String senha) {
+        PreparedStatement st = null;
+        java.sql.Connection conn = null;
 
-        String sql = "SELECT * FROM usuario WHERE nome = ? AND senha = ?";
+        try {
+            conn = DB.getConnection();
+            String sql = "SELECT * FROM usuario WHERE nome = ? AND senha = ?";
+            st = conn.prepareStatement(sql);
 
-        try (Connection conn = DriverManager.getConnection(url, dbUsuario, dbSenha);
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            st.setString(1, nome);
+            st.setString(2, senha);
 
-            pstmt.setString(1, nome);
-            pstmt.setString(2, senha);
-
-            try (ResultSet rs = pstmt.executeQuery()) {
-                // Retorna true se houver pelo menos um resultado
+            try (ResultSet rs = st.executeQuery()) {
                 return rs.next();
             }
 
         } catch (SQLException e) {
-            System.out.println("Erro ao autenticar o usuário: " + e.getMessage());
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Erro ao autenticar o usuário: " + e.getMessage());
+            alert.showAndWait();
             return false;
+        } finally {
+            DB.closeStatement(st);
+            DB.closeConnection();
         }
     }
+
 
 
     public void mostrarTelaLogin(Stage stage) {
