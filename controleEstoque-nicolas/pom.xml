@@ -55,9 +55,12 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.1</version>
 				<configuration>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
-				</configuration>
+					<source>21</source>
+					<target>21</target>
+					<compilerArgs>
+						<arg>--enable-preview</arg>
+					</compilerArgs>
+                </configuration>
 			</plugin>
 
 			<!-- Plugin para execução de aplicações JavaFX -->
@@ -67,6 +70,9 @@
 				<version>0.0.8</version>
 				<configuration>
 					<mainClass>com.controleEstoque.MainApp</mainClass>
+					<options>
+						<option>--enable-preview</option>
+					</options>
 				</configuration>
 			</plugin>
 		</plugins>

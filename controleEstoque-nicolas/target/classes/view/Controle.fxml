@@ -47,7 +47,6 @@
                            </textFill>
                         </Label>
                         <Separator layoutX="-1.0" layoutY="232.0" prefHeight="22.0" prefWidth="864.0" />
-                        <ListView fx:id="listaProdutos" layoutX="62.0" layoutY="317.0" prefHeight="200.0" prefWidth="541.0" />
                         <Label alignment="CENTER" layoutX="62.0" layoutY="260.0" style="&#10;" text="Busca de produtos:" textAlignment="CENTER" wrapText="false">
                            <font>
                               <Font size="18.0" fx:id="x12" />
@@ -58,6 +57,14 @@
                         </Label>
                         <TextField fx:id="nomeProdutoField" layoutX="61.0" layoutY="285.0" />
                         <Button fx:id="pesquisarButton" layoutX="235.0" layoutY="285.0" mnemonicParsing="false" text="Pesquisar" />
+                        <TableView fx:id="tabelaProdutos" layoutX="44.0" layoutY="331.0" prefHeight="200.0" prefWidth="432.0">
+                          <columns>
+                              <TableColumn fx:id="colunaId" prefWidth="68.0" text="ID" />
+                              <TableColumn fx:id="colunaNome" prefWidth="176.0" text="Nome" />
+                              <TableColumn fx:id="colunaPreco" prefWidth="104.0" text="Preço" />
+                              <TableColumn fx:id="colunaQuantidade"  prefWidth="82.0" text="Quantidade" />
+                          </columns>
+                        </TableView>
               </children>
             </AnchorPane>
           </content>
