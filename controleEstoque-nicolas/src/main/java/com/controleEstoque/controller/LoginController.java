@@ -53,10 +53,10 @@ public class LoginController {
                 stage.show();
             } catch (IOException e) {
                 e.printStackTrace();
-                // Adicione tratamento de erro adequado
             }
-        } else {
-            System.out.println("Erro: Nome de usuário ou senha incorretos.");
+        } else{
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Usuario ou senha incorretas.");
+            alert.showAndWait();
         }
     }
 

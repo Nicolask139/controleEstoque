@@ -8,10 +8,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.sql.*;
+
+import static com.controleEstoque.db.DB.conn;
 
 public class ControleController {
 
@@ -21,7 +21,6 @@ public class ControleController {
     private Label disponivelVendaLabel;
     @FXML
     private Label reservadosLabel;
-
     @FXML
     private Button controleEstoqueButton;
     @FXML
@@ -36,7 +35,6 @@ public class ControleController {
     private Button atualizarEstoqueButton;
     @FXML
     private TextField nomeProdutoField;
-
     @FXML
     private TableView<Produto> tabelaProdutos;
     @FXML
@@ -47,30 +45,28 @@ public class ControleController {
     private TableColumn<Produto, Double> colunaPreco;
     @FXML
     private TableColumn<Produto, Integer> colunaQuantidade;
-
     @FXML
     private Button pesquisarButton;
 
+    //Adiciona ação aos botões do menu lateral && popula as rows da tabela produtos se ela não for nula.
     public void initialize() {
-        // Configura a navegação entre telas
+
         atualizarEstoqueButton.setOnAction(event -> loadScreen("/view/Atualizar.fxml"));
         fornecedoresButton.setOnAction(event -> loadScreen("/view/Fornecedores.fxml"));
         clientesButton.setOnAction(event -> loadScreen("/view/Clientes.fxml"));
         historicoButton.setOnAction(event -> loadScreen("/view/Historico.fxml"));
         cadastrarProdutoButton.setOnAction(event -> loadScreen("/view/Cadastrar.fxml"));
 
-        // Configura as colunas da TableView com o modelo Produto
         if (tabelaProdutos != null) {
             colunaId.setCellValueFactory(new PropertyValueFactory<>("id"));
             colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
             colunaPreco.setCellValueFactory(new PropertyValueFactory<>("preco"));
             colunaQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
         }
-
-        // Configura o botão de pesquisa
         pesquisarButton.setOnAction(event -> acaoPesquisaNome());
     }
 
+    //carrega o palco atual do usuario, ja que não pode ser nulo
     private void loadScreen(String fxmlFile) {
         Stage currentStage = (Stage) controleEstoqueButton.getScene().getWindow();
         new RouteController().loadScreen(currentStage, fxmlFile);
@@ -89,21 +85,25 @@ public class ControleController {
 
     private void pesquisarNome(String nome) {
         ObservableList<Produto> produtos = FXCollections.observableArrayList();
-        String sql = "SELECT * FROM produto WHERE Nome LIKE ?";
+        PreparedStatement st = null;
+        Connection conn = null;
+        ResultSet rs = null;
 
-        try (Connection conn = DB.getConnection();
-             PreparedStatement st = conn.prepareStatement(sql)) {
+        try {
+            conn = DB.getConnection();
+            String sql = "SELECT * FROM produto WHERE Nome LIKE ?";
+            st = conn.prepareStatement(sql);
 
             st.setString(1, "%" + nome + "%");
-            try (ResultSet rs = st.executeQuery()) {
-                while (rs.next()) {
-                    int id = rs.getInt("id");
-                    String nomeProduto = rs.getString("Nome");
-                    double preco = rs.getDouble("Preco");
-                    int quantidade = rs.getInt("Quantidade");
 
-                    produtos.add(new Produto(id, nomeProduto, preco, quantidade));
-                }
+            rs = st.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String nomeProduto = rs.getString("Nome");
+                double preco = rs.getDouble("Preco");
+                int quantidade = rs.getInt("Quantidade");
+
+                produtos.add(new Produto(id, nomeProduto, preco, quantidade));
             }
 
             if (tabelaProdutos != null) {
@@ -114,14 +114,13 @@ public class ControleController {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, "Erro ao buscar produtos: " + e.getMessage());
             alert.showAndWait();
+        } finally {
+            // Fechar recursos manualmente
+            DB.closeResultSet(rs);
+            DB.closeStatement(st);
+            DB.closeConnection();
         }
     }
 
-    public TextField getNomeProdutoField() {
-        return nomeProdutoField;
-    }
-
-    public void setNomeProdutoField(TextField nomeProdutoField) {
-        this.nomeProdutoField = nomeProdutoField;
-    }
 }
+
